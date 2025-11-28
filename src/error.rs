@@ -1,4 +1,4 @@
-use std::{collections::HashMap, f32::DIGITS, intrinsics::breakpoint};
+use std::{collections::HashMap, f32::consts::E};
 
 #[derive(Debug)]
 pub enum Expr {
@@ -56,7 +56,22 @@ fn eval_binop(o: &Operator, a: i64, b: i64) -> Result<i64, EvalError> {
 
 pub fn eval(vars: &HashMap<String, i64>, expr: &Expr) -> Result<i64, EvalError> {
     match expr {
-         
+        Expr::Binop(operator, l, r) => {
+            let vl = eval(vars, l);
+            let vr = eval(vars, r);
+            match vl {
+                Ok(verif_vl) => match vr {
+                    Ok(verif_vr) => eval_binop(operator, verif_vl, verif_vr),
+                    Err(r) => Err(r),
+                },
+                Err(r) => Err(r)
+            }
+        },
+        Expr::Int(x) => Ok(*x),
+        Expr::Var(name) => match vars.get(name) {
+            Some(x) => Ok(*x),
+            None => Err(EvalError::UnknownVariable(name.to_string())),
+        }
     }
 }
 
