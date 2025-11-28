@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, f32::DIGITS, intrinsics::breakpoint};
 
 #[derive(Debug)]
 pub enum Expr {
@@ -35,18 +35,28 @@ pub enum EvalError {
 
 // exercise starts here
 fn divide(a: i64, b: i64) -> Result<i64, ()> {
-    todo!()
+    if b == 0 {
+        Err(())
+    } else {
+        Ok(a / b) // integer division truncates toward zero
+    }
 }
 
 fn eval_binop(o: &Operator, a: i64, b: i64) -> Result<i64, EvalError> {
     match o {
-        _ => todo!(),
+        Operator::Add => Ok(a + b),
+        Operator::Sub => Ok(a - b),
+        Operator::Mul => Ok(a * b),
+        Operator::Div => match divide(a, b) {
+            Ok(x) => Ok(x),
+            Err(()) => Err(EvalError::DivisionByZero),
+        },
     }
 }
 
 pub fn eval(vars: &HashMap<String, i64>, expr: &Expr) -> Result<i64, EvalError> {
     match expr {
-        _ => todo!(),
+         
     }
 }
 

@@ -2,24 +2,29 @@
 #![allow(unused_variables, dead_code)]
 
 fn add(a: u32, b: i16) -> u64 {
-    todo!()
+    let sum = a as i64 + b as i64;
+    sum as u64
 }
 
 fn third<A>(t: &[A; 4]) -> &A {
-    todo!()
+    &t[2]
 }
 
 fn second<A: Clone>(t: &[A; 4]) -> A {
-    todo!()
+    t[1].clone()
 }
 
 fn increment(i: &mut u64) {
-    todo!()
+    *i += 1;
 }
 
 fn transpose(matrix: [[i32; 3]; 3]) -> [[i32; 3]; 3] {
     let mut result = [[0; 3]; 3];
-    todo!();
+    for i in 0..3 {
+        for j in 0..3 {
+            result[i][j] = matrix[j][i];
+        }
+    }
     result
 }
 
